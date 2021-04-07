@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 //Porque sempre vamos instanciar o banco de maneira unica, nao precisamos de varias instancias
 //Precisamos da mesma intancia, pra manipular o banco de dados.
 class NotesHelper {
+  static final String nomeTabela = "notes";
   static final NotesHelper _notesHelper = NotesHelper._internal();
   Database _db;
   factory NotesHelper() {
@@ -27,7 +28,7 @@ class NotesHelper {
   //Criacao da table
   _onCreate(Database db, int version) async {
     String sql =
-        "CREATE TABLE notes (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR, descricao TEXT, data DATETIME)";
+        "CREATE TABLE $nomeTabela (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR, descricao TEXT, data DATETIME)";
     await db.execute(sql);
   }
 
@@ -41,7 +42,10 @@ class NotesHelper {
   }
 
   //Metodo para salvar as notas
-  saveNotes(Notes notes){
-    
+  Future<int> saveNotes(Notes notes) async {
+    var bancoDados = await db;
+    int id = await bancoDados.insert(
+      nomeTabela,
+    );
   }
 }
