@@ -1,3 +1,4 @@
+import 'package:lista_tarefas/model/Notes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -40,7 +41,7 @@ class NotesHelper {
   }
 
   //Metodo para salvar as notas
-  saveNotes(){
+  saveNotes(Notes notes){
     
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lista_tarefas/helper/NotesHelper.dart';
+import 'package:lista_tarefas/model/Notes.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class _HomeState extends State<Home> {
   //Controlador do textField
   TextEditingController _tituloController = TextEditingController();
   TextEditingController _descricaoController = TextEditingController();
+  //Atributo para acessar o banco
+  var _db = NotesHelper();
   //Metodo para exibir dialog de adicionar e editar notas
   _adicionarEditarNotas() {
     showDialog(
@@ -53,8 +57,11 @@ class _HomeState extends State<Home> {
 
   _saveNote() {
     //Recuperar titulo e descricao da interface
-    String title = _tituloController.text;
-    String content = _descricaoController.text;
+    String titulo = _tituloController.text;
+    String descricao = _descricaoController.text;
+    //Configurando o que foi recuperado num model
+    Notes notes = Notes(titulo, descricao, "");
+    _db.saveNotes(notes);
   }
 
   @override
