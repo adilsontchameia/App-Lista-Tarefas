@@ -17,6 +17,8 @@ class _HomeState extends State<Home> {
           return AlertDialog(
             title: Text("Add Task"),
             content: Column(
+              //Espeaco minimo para o conteudo
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _tituloController,
@@ -38,7 +40,9 @@ class _HomeState extends State<Home> {
                 child: Text("Cancelar"),
               ),
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  //Salvar
+                },
                 child: Text("Salvar"),
               ),
             ],
