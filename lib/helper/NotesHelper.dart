@@ -17,8 +17,25 @@ class NotesHelper {
     //Vou iniciar db quando nao tiver instancia configurada
     if (_db != null) {
       return _db;
-    }else {
-      
-    }
+    } else {}
+  }
+
+  //Criacao da table
+  _onCreate(Database db, int version) async {
+   String sql = 
+   "CREATE TABLE notes (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR, descricao TEXT, data DATETIME)";
+   await db.execute(sql); 
+  }
+
+  //Iniciar o banco de dados
+  iniciarDB() async {
+    final caminhoBancoDados = await getDatabasesPath();
+    final localBancoDados = join(caminhoBancoDados, "mynotes.db");
+    var db = await openDatabase(
+      localBancoDados,
+      version: 1,
+      onCreate: 
+    );
+    return db;
   }
 }
