@@ -42,12 +42,19 @@ class _HomeState extends State<Home> {
               TextButton(
                 onPressed: () {
                   //Salvar
+                  _saveNote();
                 },
                 child: Text("Salvar"),
               ),
             ],
           );
         });
+  }
+
+  _saveNote() {
+    //Recuperar titulo e descricao da interface
+    String title = _tituloController.text;
+    String content = _descricaoController.text;
   }
 
   @override
