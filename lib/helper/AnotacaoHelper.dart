@@ -1,17 +1,19 @@
-import 'package:lista_tarefas/model/Notes.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class NotesHelper {
+import '../model/Anotacao.dart';
+
+class AnotacaoHelper {
   static final String nomeTabela = "anotacao";
-  static final NotesHelper _anotacaoHelper = NotesHelper._internal();
+
+  static final AnotacaoHelper _anotacaoHelper = AnotacaoHelper._internal();
   Database _db;
 
-  factory NotesHelper() {
+  factory AnotacaoHelper() {
     return _anotacaoHelper;
   }
 
-  NotesHelper._internal() {}
+  AnotacaoHelper._internal() {}
 
   get db async {
     if (_db != null) {
@@ -48,7 +50,7 @@ class NotesHelper {
     return db;
   }
 
-  Future<int> salvarAnotacao(Notes anotacao) async {
+  Future<int> salvarAnotacao(Anotacao anotacao) async {
     var bancoDados = await db;
     int resultado = await bancoDados.insert(nomeTabela, anotacao.toMap());
     return resultado;
@@ -56,8 +58,58 @@ class NotesHelper {
 
   recuperarAnotacoes() async {
     var bancoDados = await db;
-    String sql = "SELECT * FROM $nomeTabela ORDER BY data DESC";
+    String sql = "SELECT * FROM $nomeTabela ORDER BY data DESC ";
     List anotacoes = await bancoDados.rawQuery(sql);
     return anotacoes;
   }
+
+  Future<int> atualizarAnotacao(Anotacao anotacao) async {
+    var bancoDados = await db;
+    return await bancoDados.update(nomeTabela, anotacao.toMap(),
+        where: "id = ?", whereArgs: [anotacao.id]);
+  }
+
+  Future<int> removerAnotacao(int id) async {
+    var bancoDados = await db;
+    return await bancoDados
+        .delete(nomeTabela, where: "id = ?", whereArgs: [id]);
+  }
 }
+
+/*
+
+class Normal {
+
+  Normal(){
+
+  }
+
+}
+
+class Singleton {
+
+  static final Singleton _singleton = Singleton._internal();
+
+  	factory Singleton(){
+      print("Singleton");
+      return _singleton;
+    }
+
+    Singleton._internal(){
+    	print("_internal");
+  	}
+
+}
+
+void main() {
+
+  var i1 = Singleton();
+  print("***");
+  var i2 = Singleton();
+
+  print( i1 == i2 );
+
+}
+
+
+* */
