@@ -4,7 +4,6 @@ class Notes {
   String descricao;
   String data;
 
-  //Construtor
   Notes(this.titulo, this.descricao, this.data);
 
   Map toMap() {
@@ -13,6 +12,11 @@ class Notes {
       "descricao": this.descricao,
       "data": this.data,
     };
+
+    if (this.id != null) {
+      map["id"] = this.id;
+    }
+
     return map;
   }
 }
